@@ -1,6 +1,10 @@
 const pokemonName = document.querySelector('.pokemonName')
 const pokemonNumber = document.querySelector('.pokemonNumber')
 const pokemonImage = document.querySelector('.pokemonImage')
+
+const searchForm = document.querySelector('.searchForm')
+const searchInput = document.querySelector('.searchInput')
+
 // Arrow Function o nome disso, animal
 
 const fetchPokemon = async (pokemon) => {
@@ -19,9 +23,24 @@ const fetchPokemon = async (pokemon) => {
 const renderPokemon = async (pokemon) => {
 
     const data = await fetchPokemon(pokemon)
+    
     pokemonName.innerHTML = data.name
+    
     pokemonNumber.innerHTML = data.id
+
     pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default']
 
+    
+    // Limpa o campo de input após a busca.
+    searchInput.value = ''
+
 }
-renderPokemon('7')
+
+searchForm.addEventListener('submit', (event) => {
+
+    // Previne o comportamento padrão do formulário, que é recarregar a página ao ser enviado.
+    event.preventDefault()
+
+    // Chama a função renderPokemon com o valor do input de busca, convertendo para minúsculas para garantir que a busca funcione independentemente de como o usuário digite o nome do Pokémon.
+    renderPokemon(searchInput.value.toLowerCase())
+})
