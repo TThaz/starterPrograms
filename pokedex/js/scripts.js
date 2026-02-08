@@ -1,3 +1,6 @@
+const pokemonName = document.querySelector('.pokemonName')
+const pokemonNumber = document.querySelector('.pokemonNumber')
+const pokemonImage = document.querySelector('.pokemonImage')
 // Arrow Function o nome disso, animal
 
 const fetchPokemon = async (pokemon) => {
@@ -9,7 +12,16 @@ const fetchPokemon = async (pokemon) => {
 
 // Tem de pegar o resultado da requisição, e transformar em um formato que o JavaScript consiga ler, que é o JSON. O método .json() é usado para isso, e ele também retorna uma Promise, porque a conversão pode levar algum tempo. Por isso, usamos await para esperar a conclusão dessa operação antes de continuar com o código. 
     const pokemonData = await apiResponse.json()
-    console.log(pokemonData)
+
+    return pokemonData
 }
 
-fetchPokemon('squirtle')
+const renderPokemon = async (pokemon) => {
+
+    const data = await fetchPokemon(pokemon)
+    pokemonName.innerHTML = data.name
+    pokemonNumber.innerHTML = data.id
+    pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default']
+
+}
+renderPokemon('7')
