@@ -2,8 +2,13 @@ const pokemonName = document.querySelector('.pokemonName')
 const pokemonNumber = document.querySelector('.pokemonNumber')
 const pokemonImage = document.querySelector('.pokemonImage')
 
+let searchPokemon = 1
+
 const searchForm = document.querySelector('.searchForm')
 const searchInput = document.querySelector('.searchInput')
+
+const btnPrev = document.querySelector('.btnPrev')
+const btnNext = document.querySelector('.btnNext')
 
 // Arrow Function o nome disso, animal
 
@@ -33,6 +38,7 @@ const renderPokemon = async (pokemon) => {
         pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default']
         // Limpa o campo de input após a busca.
         searchInput.value = ''
+        searchPokemon = data.id
     } else {
         alert("Pokémon não encontrado!")
         searchInput.value = ''
@@ -54,3 +60,17 @@ searchForm.addEventListener('submit', (event) => {
     // Chama a função renderPokemon com o valor do input de busca, convertendo para minúsculas para garantir que a busca funcione independentemente de como o usuário digite o nome do Pokémon.
     renderPokemon(searchInput.value.toLowerCase())
 })
+
+btnPrev.addEventListener('click', () => {
+    if(searchPokemon > 1) {
+        searchPokemon -= 1
+        renderPokemon(searchPokemon)
+    }
+})
+
+btnNext.addEventListener('click', () => {
+    searchPokemon += 1
+    renderPokemon(searchPokemon)
+})
+
+renderPokemon(searchPokemon)
