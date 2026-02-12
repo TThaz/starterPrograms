@@ -2,13 +2,14 @@ const pokemonName = document.querySelector('.pokemonName')
 const pokemonNumber = document.querySelector('.pokemonNumber')
 const pokemonImage = document.querySelector('.pokemonImage')
 
-let searchPokemon = 1
+let selectedPokemon = 1
 
 const searchForm = document.querySelector('.searchForm')
 const searchInput = document.querySelector('.searchInput')
 
 const btnPrev = document.querySelector('.btnPrev')
 const btnNext = document.querySelector('.btnNext')
+const btnSubmit = document.querySelector('.btnSubmit')
 
 // Arrow Function o nome disso, animal
 
@@ -38,7 +39,7 @@ const renderPokemon = async (pokemon) => {
         pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default']
         // Limpa o campo de input após a busca.
         searchInput.value = ''
-        searchPokemon = data.id
+        selectedPokemon = data.id
     } else {
         alert("Pokémon não encontrado!")
         searchInput.value = ''
@@ -61,16 +62,20 @@ searchForm.addEventListener('submit', (event) => {
     renderPokemon(searchInput.value.toLowerCase())
 })
 
+btnSubmit.addEventListener('click', () => {
+    searchForm.requestSubmit()
+})
+
 btnPrev.addEventListener('click', () => {
-    if(searchPokemon > 1) {
-        searchPokemon -= 1
-        renderPokemon(searchPokemon)
+    if(selectedPokemon > 1) {
+        selectedPokemon -= 1
+        renderPokemon(selectedPokemon)
     }
 })
 
 btnNext.addEventListener('click', () => {
-    searchPokemon += 1
-    renderPokemon(searchPokemon)
+    selectedPokemon += 1
+    renderPokemon(selectedPokemon)
 })
 
-renderPokemon(searchPokemon)
+renderPokemon(selectedPokemon)
